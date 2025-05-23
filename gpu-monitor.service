@@ -1,0 +1,13 @@
+[Unit]
+Description=GPU Monitor Service
+After=network.target
+
+[Service]
+User=dd
+WorkingDirectory=/home/dd/ws/gpu_mon
+ExecStart=/home/dd/ws/gpu_mon/.venv/bin/python /home/dd/ws/gpu_mon/gpu_monitor.py
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
