@@ -50,71 +50,9 @@ def send(title, body, files):
             except FileNotFoundError:
                 print(f"文件 {file} 不存在，跳过该附件。")
 
-    server = smtplib.SMTP(
-        os.getenv("EMAIL_SMTP"), os.getenv("EMAIL_PORT")
-    )  # 使用163邮箱的SMTP服务器
+    server = smtplib.SMTP(os.getenv("EMAIL_SMTP"), os.getenv("EMAIL_PORT"))
     server.starttls()  # 启动TLS模式
     server.login(sender, password)
     text = msg.as_string()
     server.sendmail(sender, receiver, text)
     server.quit()
-
-
-if __name__ == "__main__":
-    title = "测试邮件"
-    body = """<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            padding: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            color: #ff6f61;
-            font-size: 24px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-        .highlight {
-            color: #00e676;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #757575;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Important Update</h1>
-        <p>Dear All,</p>
-        <p>Please find the attached files for today's advise.</p>
-        <p>
-            <span class="highlight">Target Position:</span> 1<br>
-            <span class="highlight">Current Position:</span> 0.9999219162004666
-        </p>
-        <p>Regards,<br>Omni Studio</p>
-        <div class="footer">
-            <p>&copy; 2024 Omni Studio. All rights reserved.</p>
-        </div>
-    </div>
-</body>
-</html>
-"""
-    files = ["studio/scripts.json"]  # 替换为你要发送的文件路径列表
-    send(title, body, files)
